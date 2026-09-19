@@ -1,0 +1,59 @@
+{
+  "title": "Jev / System-One Vision",
+  "status": "working technical synthesis",
+  "date": "2026-09-19",
+  "core_thesis": "The useful Jev-like property is not merely one-token output; it is encoding rich state once and cheaply evaluating many independently specified semantic questions against the shared representation.",
+  "concepts": [
+    {
+      "id": "jev-core",
+      "text": "Jev-like systems are direct decision systems over a semantic representation rather than autoregressive generators. Input understanding still costs compute; serial language decoding can disappear."
+    },
+    {
+      "id": "one-token-baseline",
+      "text": "A causal LLM can approximate Jev-like behavior by prefill plus next-token logits restricted to candidate answers, then stopping. Any Jev latency claim should be compared against this baseline."
+    },
+    {
+      "id": "prefill",
+      "text": "A non-generative system may not call input processing 'prefill', but equivalent semantic computation over the input remains necessary."
+    },
+    {
+      "id": "vision-v0",
+      "text": "Prototype: generate N image crops, batch them through SigLIP/CLIP, encode arbitrary text labels once, and compute an N x M similarity matrix with no autoregressive generation."
+    },
+    {
+      "id": "batching-vs-reuse",
+      "text": "Batching N crops is parallel execution but not true compute reuse; overlapping pixels are still repeatedly encoded."
+    },
+    {
+      "id": "vision-v1",
+      "text": "Better architecture: encode the full image once into a dense spatial feature map, extract N region embeddings with ROI pooling or learned queries, then score all regions against M dynamic predicates in parallel."
+    },
+    {
+      "id": "predicates",
+      "text": "Predicates need not be object labels. Examples include objectness, damage, corrosion, leakage, graspability, danger, abnormality, missing fastener, and temporal identity."
+    },
+    {
+      "id": "related-work",
+      "text": "Relevant families include CLIP/SigLIP, DETR, SAM, open-vocabulary detection, ROIAlign, region-language models, and calibrated classifiers."
+    },
+    {
+      "id": "research-hypothesis",
+      "text": "The target abstraction is one scene representation plus N spatial queries times M semantic predicates, yielding a large direct decision matrix."
+    }
+  ],
+  "roadmap": [
+    "v0: batched crops + SigLIP/CLIP",
+    "v1: shared full-image features + ROI queries",
+    "v2: arbitrary predicate matrix",
+    "v3: probability calibration",
+    "v4: temporal/video state reuse"
+  ],
+  "benchmark_baselines": [
+    "VLM with normal generation",
+    "same VLM with one-token/logit output",
+    "batched crop CLIP/SigLIP",
+    "shared-feature ROI model",
+    "open-vocabulary detector",
+    "DETR-like query model"
+  ]
+}
